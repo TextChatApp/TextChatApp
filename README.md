@@ -45,7 +45,7 @@ cd backend
 
 Настройте файл `application.properties` в каталоге `src/main/resources`:
 
-## 2. Настройка Frontend
+## 3. Настройка Frontend
 
 Перейдите в папку backend:
 
@@ -62,3 +62,21 @@ npm install
 ```
 npm run serve
 ```
+
+## 4. Тестирование
+
+Backend-тесты
+
+В папке `backend` выполните команду:
+```
+mvn test
+```
+
+Frontend-тесты
+
+В папке `frontend` выполните команду:
+```
+npm run test
+```
+
+## 5. CI/CD
