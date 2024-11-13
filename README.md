@@ -45,6 +45,17 @@ cd backend
 
 Настройте файл `application.properties` в каталоге `src/main/resources`:
 
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/textchatapp
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+```
+
+Запустите серверную часть:
+```
+mvn spring-boot:run
+```
+
 ## 3. Настройка Frontend
 
 Перейдите в папку backend:
