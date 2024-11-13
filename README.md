@@ -98,3 +98,7 @@ npm run test
 ```
 
 ## 5. CI/CD
+
+## Документация
+[Руководство пользователя](https://github.com/TextChatApp/TextChatApp/blob/main/docs/presentation.pdf) – см. docs/user_guide, включает инструкции по работе с интерфейсом. <br/>
+[Презентация проекта](https://github.com/TextChatApp/TextChatApp/blob/main/docs/user_guide.pdf) – доступна в docs/presentation.
