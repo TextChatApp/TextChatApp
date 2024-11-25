@@ -1,11 +1,13 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  <div>Hello</div>
+  <div class="app-continer">
+    <router-view></router-view>
+  </div>
 </template>
 
-<style>
-@import "./styles/main.css"
+<script setup lang="ts"></script>
+
+<style scoped>
+.app-continer {
+  height: 100vh;
+}
 </style>
