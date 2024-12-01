@@ -61,7 +61,7 @@ mvn spring-boot:run
 
 ## 3. Настройка Frontend
 
-Перейдите в папку backend:
+Перейдите в папку frontend:
 
 ```
 cd frontend
