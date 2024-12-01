@@ -76,7 +76,7 @@ npm install
 Запустите сервер разработки:
 
 ```
-npm run serve
+npm run dev
 ```
 
 ## 4. Тестирование
