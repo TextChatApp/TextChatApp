@@ -8,7 +8,10 @@
           <div class="w-full">
             <LoginForm class="mb-2"></LoginForm>
           </div>
-          <p>Dont have an account? <span class="text-accent-main">Sign up</span></p>
+          <p>
+            Dont have an account?
+            <router-link class="text-accent-main" to="/register">Sign up</router-link>
+          </p>
         </div>
       </div>
     </div>

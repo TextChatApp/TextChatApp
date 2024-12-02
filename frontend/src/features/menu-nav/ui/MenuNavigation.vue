@@ -1,13 +1,15 @@
 <template>
   <div class="flex gap-11 justify-center items-center sm:flex-col">
     <div class="flex justify-center items-center icon" :class="[{ active: isActive('chats') }]">
-      <router-link :to="'#'"><IconHome :isActive="isActive('chats')"></IconHome></router-link>
+      <router-link :to="'/'"><IconHome :isActive="isActive('chats')"></IconHome></router-link>
     </div>
     <div class="flex justify-center items-center icon" :class="[{ active: isActive('settings') }]">
       <router-link :to="'#'"><IconSettings></IconSettings></router-link>
     </div>
     <div class="flex justify-center items-center icon" :class="[{ active: isActive('chat') }]">
-      <router-link :to="'#'"><IconChats :isActive="isActive('chat')"></IconChats></router-link>
+      <router-link :to="'/chat/1'"
+        ><IconChats :isActive="isActive('chat')"></IconChats
+      ></router-link>
     </div>
   </div>
 </template>

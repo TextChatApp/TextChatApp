@@ -27,5 +27,49 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  background-color: black;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.my-notification {
+  margin: 0 5px 5px;
+  padding: 10px;
+  font-size: 14px;
+  color: #ffffff;
+
+  background: #000203;
+  border-left: rgb(0, 0, 0) lid #187fe7;
+  .notification-title {
+    font-size: 16px;
+  }
+
+  .notification-content {
+    font-size: 14px;
+  }
+
+  &.success {
+    background-color: #008000;
+  }
+  &.info {
+    background-color: #5051f9;
+  }
+  &.error {
+    background-color: #f03a3a;
+  }
 }

@@ -1,4 +1,4 @@
-import Chats from '@/widgets/chats'
+import Chat from '@/widgets/chat/Chat.vue'
 
 export const routes = [
   {
@@ -10,7 +10,7 @@ export const routes = [
         path: '',
         name: 'chats',
         components: {
-          mobile: () => import('@/widgets/chats'),
+          mobile: () => import('@/widgets/sidebar'),
           desktop: () => import('@/shared/ui/empty-chat')
         }
       },
@@ -18,11 +18,15 @@ export const routes = [
         path: 'chat/:id',
         name: 'chat',
         components: {
-          mobile: () => import('@/widgets/chat'),
-          desktop: () => import('@/widgets/chat')
+          mobile: Chat,
+          desktop: Chat
         }
       }
-    ]
+    ],
+    meta: {
+      title: 'Home',
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -30,7 +34,7 @@ export const routes = [
     component: () => import('@/pages/login')
   },
   {
-    path: '/signUp',
+    path: '/register',
     name: 'signUp',
     component: () => import('@/pages/sign-up')
   }
