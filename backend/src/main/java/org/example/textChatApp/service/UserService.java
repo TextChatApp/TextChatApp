@@ -1,5 +1,6 @@
 package org.example.textChatApp.service;
 
+import org.example.textChatApp.dto.UserDTO;
 import org.example.textChatApp.model.User;
 import org.example.textChatApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UserService {
     }
 
     // авторизация (проверка логина и пароля)
-    public User login(User user) {
+    public UserDTO login(User user) {
         User foundUser = userRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -44,7 +45,7 @@ public class UserService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return foundUser;
+        return new UserDTO(foundUser);  // User в UserDTO
     }
 
     private String generateToken(User user) {

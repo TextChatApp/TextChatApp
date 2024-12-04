@@ -5,7 +5,7 @@
         <img :src="user" alt="" width="50" height="50" />
       </div>
       <div class="flex-1 min-w-0">
-        <span class="block font-bold text-base truncate">Design Team</span>
+        <span class="block font-bold text-base truncate">{{ chat?.userTwo?.username }}</span>
         <p class="block text-sm truncate">Hello everyOne</p>
       </div>
     </div>
@@ -17,7 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import user from '@/shared/assets/image/user.png'
+import user from '@/shared/assets/image/default-avatar-accent.png'
+import { type User } from '@/entities/user'
+
+interface PrivateChat {
+  id?: number
+  userOne?: User
+  userTwo?: User
+}
+
+const props = defineProps<{
+  chat: PrivateChat
+}>()
 </script>
 
 <style></style>

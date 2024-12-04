@@ -3,8 +3,9 @@
     <div role="status">
       <svg
         aria-hidden="true"
-        class="inline w-12 h-12 text-main animate-spin dark:text-gray-600 fill-accent-main"
+        class="inline text-main animate-spin dark:text-gray-600 fill-accent-main"
         :class="{ 'text-white': !isDark }"
+        :style="{ width: width, height: height }"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +27,13 @@
 <script setup lang="ts">
 interface Props {
   isDark?: boolean
+  width?: string
+  height?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isDark: false
+  isDark: false,
+  width: '48px',
+  height: '48px'
 })
 </script>

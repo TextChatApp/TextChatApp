@@ -1,5 +1,6 @@
 package org.example.textChatApp.controller;
 
+import org.example.textChatApp.dto.UserDTO;
 import org.example.textChatApp.model.User;
 import org.example.textChatApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         try {
-            User loggedInUser = userService.login(user);
+            UserDTO loggedInUser = userService.login(user);
             return ResponseEntity.ok(loggedInUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());

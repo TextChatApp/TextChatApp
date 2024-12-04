@@ -9,16 +9,18 @@
 import axios from 'axios'
 import { onMounted } from 'vue'
 
-const getData = async () => {
-  try {
-    const { data } = await axios.get('http://localhost:8080/api/chats')
-    console.log(data)
-  } catch (err) {}
-}
+// const getData = async () => {
+//   try {
+//     const { data } = await axios.get('http://localhost:8080/api/chats')
+//     console.log(data)
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
-onMounted(async () => {
-  await getData()
-})
+// onMounted(async () => {
+//   await getData()
+// })
 </script>
 
 <style scoped>

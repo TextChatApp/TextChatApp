@@ -8,11 +8,8 @@ export const router = createRouter({
   routes
 })
 
-//requiresGuest: true
-
 router.beforeEach((to, from, next) => {
   document.title = typeof to.meta.title === 'string' ? to.meta.title : 'Home'
-  console.log(121212)
   const userStore = useUser()
   const { userInfo } = storeToRefs(userStore)
 

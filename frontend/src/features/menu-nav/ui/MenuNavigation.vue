@@ -11,11 +11,14 @@
         ><IconChats :isActive="isActive('chat')"></IconChats
       ></router-link>
     </div>
+    <div class="flex justify-center items-center icon" :class="[{ active: isActive('users') }]">
+      <router-link to="/users"><IconUsers :isActive="isActive('users')"></IconUsers></router-link>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { IconHome, IconChats, IconSettings } from '@/shared/ui/icons/menu'
+import { IconHome, IconChats, IconSettings, IconUsers } from '@/shared/ui/icons/menu'
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRoute } from 'vue-router'
@@ -23,7 +26,6 @@ import { useRoute } from 'vue-router'
 const router = useRoute()
 
 const isActive = (name: string) => {
-  console.log(router.name)
   return router.name === name
 }
 </script>

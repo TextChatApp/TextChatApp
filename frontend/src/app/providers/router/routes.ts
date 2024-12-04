@@ -17,9 +17,18 @@ export const routes = [
       {
         path: 'chat/:id',
         name: 'chat',
+        props: true,
         components: {
           mobile: Chat,
           desktop: Chat
+        }
+      },
+      {
+        path: 'users',
+        name: 'users',
+        components: {
+          mobile: () => import('@/pages/users'),
+          desktop: () => import('@/pages/users')
         }
       }
     ],
@@ -31,11 +40,19 @@ export const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/pages/login')
+    component: () => import('@/pages/login'),
+    meta: {
+      title: 'Login',
+      requiresGuest: true
+    }
   },
   {
     path: '/register',
     name: 'signUp',
-    component: () => import('@/pages/sign-up')
+    component: () => import('@/pages/sign-up'),
+    meta: {
+      title: 'Register',
+      requiresGuest: true
+    }
   }
 ]

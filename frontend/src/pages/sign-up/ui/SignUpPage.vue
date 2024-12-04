@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { Logo } from '@/shared/ui/logo'
-import { RegisterForm } from '@/features/auth/ui'
+import { RegisterForm } from '@/features/auth'
 </script>
 
 <style></style>

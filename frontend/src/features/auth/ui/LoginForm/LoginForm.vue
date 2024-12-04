@@ -1,13 +1,18 @@
 <template>
-  <form class="flex flex-col gap-8 items-center">
-    <LoginInput class="w-full" v-model="username" :placeholder="'Username'">
+  <form class="flex flex-col items-center" @submit.prevent="signIn">
+    <LoginInput class="w-full h-20" v-model="username" :placeholder="'Username'">
       <img :src="humanIcon" alt="humonIcon" />
     </LoginInput>
-    <LoginInput class="w-full" :inputType="'password'" v-model="password" :placeholder="'Password'">
+    <LoginInput
+      class="w-full h-20"
+      :inputType="'password'"
+      v-model="password"
+      :placeholder="'Password'"
+    >
       <img :src="passwordIcon" alt="humonIcon" />
     </LoginInput>
-    <ButtonLogin class="text-center" :text="'Login'" @click="signIn" v-if="!loading"></ButtonLogin>
-    <Loader :isDark="true" v-if="loading"></Loader>
+    <ButtonLogin class="text-center" :text="'Login'" :loading="loading"></ButtonLogin>
+    <!-- <Loader :isDark="true" v-if="loading"></Loader> -->
   </form>
 </template>
 

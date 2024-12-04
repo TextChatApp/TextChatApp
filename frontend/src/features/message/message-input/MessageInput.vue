@@ -3,13 +3,13 @@
     <input
       type="text"
       placeholder="Your message"
-      v-model="message"
+      v-model="modelValue"
       class="w-full pl-5 pr-12 text-white py-3 transition-all bg-main outline-none rounded-xl focus:outline-none active:outline-none placeholder:text-input-placeholder placeholder:text-sm"
     />
     <div class="absolute top-1 translate-y-1/2 right-5 flex gap-4">
       <SmileIcon @click="togglePicker()" :isActive="pickerOpen"></SmileIcon>
       <UploadIcon></UploadIcon>
-      <SendIcon></SendIcon>
+      <SendIcon @click="emits('send-message')"></SendIcon>
     </div>
     <!-- <div class="absolute top-1 translate-y-1/2 right-5 cursor-pointer">
       <SendIcon></SendIcon>
@@ -36,18 +36,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useModel } from 'vue'
 import EmojiPicker from 'vue3-emoji-picker'
 import { SmileIcon, UploadIcon, SendIcon } from '@/shared/ui/icons/inputIcons'
 
 import 'vue3-emoji-picker/css'
 
-const message = ref('')
+const modelValue = defineModel()
+
+const emits = defineEmits(['send-message'])
+
 const pickerOpen = ref(false)
 const pickerWrapper = ref()
 
 const onSelectEmoji = (emoji: any) => {
-  message.value += emoji.i
+  modelValue.value += emoji.i
 }
 
 const togglePicker = () => {

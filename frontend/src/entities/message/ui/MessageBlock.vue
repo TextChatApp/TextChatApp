@@ -1,10 +1,16 @@
 <template>
   <div class="bg-accent-main rounded-xl px-5 py-3 w-full break-words">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum nisi fugiat consectetur hic
-    rerum! Ipsa soluta iusto magnam corporis recusandae iure, comm
+    {{ message?.content }}
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUser } from '@/entities/user'
+import { onMounted } from 'vue'
+
+const props = defineProps({
+  message: Object
+})
+</script>
 
 <style></style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8 items-center">
+  <form class="flex flex-col gap-8 items-center" @submit.prevent="signUp">
     <LoginInput class="w-full" :inputType="'email'" :placeholder="'your email'" v-model="email">
       <img :src="mailIcon" alt="password" />
     </LoginInput>
@@ -14,14 +14,8 @@
     >
       <img :src="passwordIcon" alt="password" />
     </LoginInput>
-    <Loader v-if="loading" :isDark="true"></Loader>
-    <ButtonLogin
-      class="text-center"
-      :text="'Register'"
-      @click="signUp()"
-      v-if="!loading"
-    ></ButtonLogin>
-  </div>
+    <ButtonLogin class="text-center" :text="'Register'" :loading="loading"></ButtonLogin>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -54,9 +48,7 @@ const signUp = async () => {
       email: email.value,
       password: password.value
     })
-    console.log(data)
     loading.value = false
-
     router.push('/login')
   } catch (err) {
     if (err instanceof AxiosError) {

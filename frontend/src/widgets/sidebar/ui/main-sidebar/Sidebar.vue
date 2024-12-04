@@ -9,9 +9,10 @@
       </div>
       <div class="flex flex-col gap-7 items-center justify-center w-full mb-3">
         <!-- cards -->
-        <router-link v-for="item in items" :key="item.id" :to="'/chat/2'" class="w-full">
-          <SidibarItem></SidibarItem>
+        <router-link v-for="chat in chats" :to="`/chat/${chat.id}`" class="w-full" :key="chat.id">
+          <SidibarItem :chat="chat"></SidibarItem>
         </router-link>
+        <Loader v-if="!chats" class="pt-10"></Loader>
       </div>
     </div>
   </div>
@@ -20,33 +21,27 @@
 <script setup lang="ts">
 import ChatsInput from '@/shared/ui/inputs/ChatsInput'
 import chatsIcon from '@/shared/assets/image/chats.png'
-import user from '@/shared/assets/image/user.png'
+import Loader from '@/shared/ui/loader/Loader.vue'
+import { getAllChats } from '@/entities/chat'
 
 import SidibarItem from './SidibarItem.vue'
+import { onMounted, ref } from 'vue'
+
+const chats = ref()
+
+const getChats = async () => {
+  try {
+    const { data } = await getAllChats()
+    chats.value = data
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 //запрос на получение чатов из энтити
-const items = [
-  {
-    id: 1,
-    name: 'Design Team',
-    desc: 'Hello everyone'
-  },
-  {
-    id: 2,
-    name: 'Design Team',
-    desc: 'Hello everyone'
-  },
-  {
-    id: 3,
-    name: 'Design Team',
-    desc: 'Hello everyone'
-  },
-  {
-    id: 4,
-    name: 'Design Team',
-    desc: 'Hello everyone'
-  }
-]
+onMounted(async () => {
+  await getChats()
+})
 </script>
 
 <style scoped></style>
