@@ -40,8 +40,8 @@ public class Message {
         this.room = room;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUser() {
+        return user.getId();
     }
 
     public void setUser(User user) {

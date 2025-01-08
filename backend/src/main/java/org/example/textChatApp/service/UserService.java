@@ -46,21 +46,17 @@ public class UserService {
         }
 
         return new UserDTO(foundUser);  // User в UserDTO
-        // Mapping
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setId(foundUser.getId());
-//        userDTO.setUsername(foundUser.getUsername());
-//        userDTO.setEmail(foundUser.getEmail());
-//        userDTO.setAvatar(foundUser.getAvatar());
-//        userDTO.setStatus(foundUser.getStatus());
-//        userDTO.setCreatedAt(foundUser.getCreatedAt());
-//        userDTO.setUpdatedAt(foundUser.getUpdatedAt());
-//
-//        return userDTO;
     }
 
+    public String generateToken(Long userId) {
+        return "token-" + userId + "-" + System.currentTimeMillis();
+    }
 
-    private String generateToken(User user) {
-        return "token-" + user.getId() + "-" + System.currentTimeMillis();
+    public Long getUserIdFromToken(String token) {
+        String[] parts = token.split("-");
+        if (parts.length < 3) {
+            throw new RuntimeException("Invalid token format");
+        }
+        return Long.parseLong(parts[1]);
     }
 }

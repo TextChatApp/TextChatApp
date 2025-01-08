@@ -15,6 +15,9 @@ public class UserDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public UserDTO() {
+    }
+
     public UserDTO(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
@@ -80,6 +83,4 @@ public class UserDTO {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    // Конструкторы, геттеры и сеттеры
 }
