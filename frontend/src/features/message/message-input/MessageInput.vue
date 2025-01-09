@@ -1,6 +1,7 @@
 <template>
   <div class="w-full relative">
     <input
+      @keydown.enter="emits('send-message')"
       type="text"
       placeholder="Your message"
       v-model="modelValue"
@@ -11,15 +12,6 @@
       <UploadIcon></UploadIcon>
       <SendIcon @click="emits('send-message')"></SendIcon>
     </div>
-    <!-- <div class="absolute top-1 translate-y-1/2 right-5 cursor-pointer">
-      <SendIcon></SendIcon>
-    </div>
-    <div class="absolute top-1 translate-y-1/2 right-14 cursor-pointer" @click="togglePicker()">
-      <SmileIcon :isActive="pickerOpen"></SmileIcon>
-    </div>
-    <div class="absolute top-1 translate-y-1/2 right-24 cursor-pointer">
-      <UploadIcon></UploadIcon>
-    </div> -->
     <Transition name="fade">
       <EmojiPicker
         v-if="pickerOpen"

@@ -1,6 +1,8 @@
 <template>
   <div class="bg-accent-main rounded-xl px-5 py-3 w-full break-words">
-    {{ message?.content }}
+    <p>
+      {{ message?.content }}
+    </p>
   </div>
 </template>
 

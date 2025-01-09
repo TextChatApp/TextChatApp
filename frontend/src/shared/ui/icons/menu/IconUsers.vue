@@ -6,6 +6,7 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     stroke="#5F6388"
+    class="transition-all"
   >
     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

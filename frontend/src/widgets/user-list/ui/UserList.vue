@@ -1,18 +1,24 @@
 <template>
-  <div class="p-10 bg-accent-main rounded-xl">
-    <div class="flex flex-col justify-center items-start">
-      <UserItem v-for="user in users" :user="user"></UserItem>
+  <div class="rounded-xl h-full overflow-y-auto">
+    <div class="flex gap-8 flex-wrap justify-center items-start">
+      <TransitionGroup name="list"
+        ><UserItem
+          v-for="user in users"
+          :key="user.id"
+          :user="user"
+          class="user-item flex-shrink-0"
+      /></TransitionGroup>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type User } from '@/entities/user'
 import UserItem from './UserItem.vue'
+import SearchUsers from '@/features/search-users'
 
-const props = defineProps<{
-  users: User
-}>()
+const props = defineProps({
+  users: Object
+})
 </script>
 
-<style></style>
+<style scoped></style>

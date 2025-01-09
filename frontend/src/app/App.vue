@@ -7,20 +7,15 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
+// import useWebSocket from '@/shared/api/socket'
+import { useSocketStore } from '@/shared/api/socket'
 
-// const getData = async () => {
-//   try {
-//     const { data } = await axios.get('http://localhost:8080/api/chats')
-//     console.log(data)
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
+const socketStore = useSocketStore()
 
-// onMounted(async () => {
-//   await getData()
-// })
+onMounted(() => {
+  socketStore.connect('ws://localhost:8080/ws')
+})
 </script>
 
 <style scoped>

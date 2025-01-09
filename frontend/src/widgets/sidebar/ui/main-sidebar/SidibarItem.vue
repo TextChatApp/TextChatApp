@@ -5,7 +5,7 @@
         <img :src="user" alt="" width="50" height="50" />
       </div>
       <div class="flex-1 min-w-0">
-        <span class="block font-bold text-base truncate">{{ chat?.userTwo?.username }}</span>
+        <span class="block font-bold text-base truncate">{{ chatName }}</span>
         <p class="block text-sm truncate">Hello everyOne</p>
       </div>
     </div>
@@ -18,7 +18,13 @@
 
 <script setup lang="ts">
 import user from '@/shared/assets/image/default-avatar-accent.png'
+import { useUser } from '@/entities/user'
 import { type User } from '@/entities/user'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+const userStore = useUser()
+const { getUserId } = storeToRefs(userStore)
 
 interface PrivateChat {
   id?: number
@@ -29,6 +35,12 @@ interface PrivateChat {
 const props = defineProps<{
   chat: PrivateChat
 }>()
+
+const chatName = computed(() =>
+  props.chat.userOne?.id == getUserId.value
+    ? props.chat.userTwo?.username
+    : props.chat.userOne?.username
+)
 </script>
 
 <style></style>

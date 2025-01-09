@@ -1,29 +1,34 @@
 <template>
-  <div class="p-10">
-    <Loader v-if="!users"></Loader>
-    <UserList v-if="users" :users="users"></UserList>
+  <div class="relative px-2 py-8 h-full overflow-y-auto">
+    <Loader v-if="!filteredUsers"></Loader>
+    <div class="w-64 m-auto mb-10">
+      <SearchUsers @update:filteredUsers="setFilteredUsers"></SearchUsers>
+    </div>
+    <UserList v-if="filteredUsers" :users="filteredUsers"></UserList>
   </div>
 </template>
 
 <script setup lang="ts">
 import UserList from '@/widgets/user-list'
 import { getAllUsers } from '@/entities/user'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+import { type User } from '@/entities/user'
+import SearchUsers from '@/features/search-users'
 import Loader from '@/shared/ui/loader/Loader.vue'
+import Popup from '@/shared/ui/popup'
+import { useUser } from '@/entities/user'
+import { storeToRefs } from 'pinia'
 
-const users = ref()
+const userStore = useUser()
 
-const getUsers = async () => {
-  try {
-    const { data } = await getAllUsers()
-    users.value = data
-  } catch (err) {
-    console.log(err)
-  }
+const filteredUsers = ref<User[]>([])
+
+const setFilteredUsers = (usersList: User[]) => {
+  filteredUsers.value = usersList
 }
 
 onMounted(async () => {
-  await getUsers()
+  await userStore.getUsers()
 })
 </script>
 
