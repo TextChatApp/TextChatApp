@@ -99,11 +99,18 @@ public class PrivateChatService {
         return new ChatDetailsDTO(chat, messages);
     }
 
-    public List<PrivateChat> getAllChats() {
-        return privateChatRepository.findAll();
-    }
-
     public List<PrivateChat> getChatsByUserId(Long userId) {
         return privateChatRepository.findChatsByUserId(userId);
+    }
+
+    // является ли пользователь участником чата
+    public void validateUserAccessToChat(Long chatId, Long userId) {
+        PrivateChat chat = privateChatRepository.findById(chatId)
+                .orElseThrow(() -> new RuntimeException("Chat not found"));
+        boolean isParticipant = chat.getUserOne().getId().equals(userId) ||
+                                    chat.getUserTwo().getId().equals(userId);
+        if (!isParticipant) {
+            throw new RuntimeException("User is not a participant of this chat");
+        }
     }
 }
