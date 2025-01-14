@@ -1,35 +1,109 @@
-@import './base.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #f8f8f8;
+  background: #1e1f25;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+::-webkit-scrollbar {
+  width: 8px; /* Ширина вертикальной полосы прокрутки */
+  height: 8px; /* Высота горизонтальной полосы прокрутки */
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+::-webkit-scrollbar-thumb {
+  background-color: #5051f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.my-notification {
+  margin: 0 5px 5px;
+  padding: 10px;
+  font-size: 14px;
+  color: #ffffff;
+
+  background: #000203;
+  border-left: rgb(0, 0, 0) lid #187fe7;
+  .notification-title {
+    font-size: 16px;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .notification-content {
+    font-size: 14px;
   }
+
+  &.success {
+    background-color: #008000;
+  }
+  &.info {
+    background-color: #5051f9;
+  }
+  &.error {
+    background-color: #f03a3a;
+  }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(-100%); /* Появление: слева */
+  opacity: 0; /* Прозрачность для плавности */
+}
+
+.slide-enter-to {
+  transform: translateX(0); /* Конец появления: в центр */
+  opacity: 1;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.slide-leave-from {
+  display: none;
+  opacity: 0;
+}
+
+.slide-leave-to {
+  display: none;
+  opacity: 0;
 }

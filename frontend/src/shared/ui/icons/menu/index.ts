@@ -1,0 +1,6 @@
+export { default as IconHome } from './IconHome.vue'
+export { default as IconSettings } from './IconSetting.vue'
+export { default as IconChats } from './IconChat.vue'
+export { default as IconLogout } from './IconLogout.vue'
+export { default as IconUsers } from './IconUsers.vue'
+export { default as IconCreateServer } from './IconCreateServer.vue'
