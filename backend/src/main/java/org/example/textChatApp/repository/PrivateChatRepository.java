@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +22,6 @@ public interface PrivateChatRepository extends JpaRepository<PrivateChat, Long> 
             "(c.userOne.id = :userId2 AND c.userTwo.id = :userId1)")
     Optional<PrivateChat> findExistingChat(@Param("userId1") Long userId1, @Param("userId2") Long userId2);
 
+    @Query("SELECT c FROM PrivateChat c WHERE c.userOne.id = :userId OR c.userTwo.id = :userId")
+    List<PrivateChat> findChatsByUserId(@Param("userId") Long userId);
 }

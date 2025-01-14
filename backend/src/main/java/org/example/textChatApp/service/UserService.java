@@ -4,9 +4,15 @@ import org.example.textChatApp.dto.UserDTO;
 import org.example.textChatApp.model.User;
 import org.example.textChatApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,7 +54,84 @@ public class UserService {
         return new UserDTO(foundUser);  // User в UserDTO
     }
 
-    private String generateToken(User user) {
-        return "token-" + user.getId() + "-" + System.currentTimeMillis();
+    public String generateToken(Long userId) {
+        return "token-" + userId + "-" + System.currentTimeMillis();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        String[] parts = token.split("-");
+        if (parts.length < 3) {
+            throw new RuntimeException("Invalid token format");
+        }
+        return Long.parseLong(parts[1]);
+    }
+
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public User updateUser(Long userId, String newUsername, String newEmail, String newPassword) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // имя
+        if (newUsername != null && !newUsername.isEmpty()) {
+            if (userRepository.existsByUsername(newUsername)) {
+                throw new RuntimeException("Username already exists");
+            }
+            existingUser.setUsername(newUsername);
+        }
+
+        // почта
+        if (newEmail != null && !newEmail.isEmpty()) {
+            if (userRepository.existsByEmail(newEmail)) {
+                throw new RuntimeException("Email already exists");
+            }
+            existingUser.setEmail(newEmail);
+        }
+
+        // пароль
+        if (newPassword != null && !newPassword.isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+        existingUser.setUpdatedAt(LocalDateTime.now());
+        return userRepository.save(existingUser);
+    }
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+    public User uploadAvatar(Long userId, MultipartFile file) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // директория существует
+        File uploadDirectory = new File(uploadDir);
+        if (!uploadDirectory.exists()) {
+            uploadDirectory.mkdirs();
+        }
+
+        try {
+            // уникальное имя для файла
+            String fileName = "avatar-" + userId + "-" + System.currentTimeMillis() +
+                    "." + getFileExtension(file.getOriginalFilename());
+            String filePath = Paths.get(fileName).toString();
+
+            // сохраняем файл
+            Files.copy(file.getInputStream(), Paths.get(uploadDir, fileName));
+
+            // обновляем пользователя
+            user.setAvatar(filePath);
+            userRepository.save(user);
+
+            return user;
+        } catch (IOException e) {
+            throw new RuntimeException("Error while uploading avatar", e);
+        }
+    }
+
+    private String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

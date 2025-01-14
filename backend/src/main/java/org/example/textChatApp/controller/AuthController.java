@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -29,7 +31,11 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         try {
             UserDTO loggedInUser = userService.login(user);
-            return ResponseEntity.ok(loggedInUser);
+            String token = userService.generateToken(loggedInUser.getId()); // Генерация токена
+            return ResponseEntity.ok(Map.of(
+                    "user", loggedInUser,
+                    "token", token
+            ));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

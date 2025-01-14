@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 01 2024 г., 17:41
+-- Время создания: Дек 02 2024 г., 18:32
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -76,14 +76,6 @@ CREATE TABLE `private_chats` (
   `user_two_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Дамп данных таблицы `private_chats`
---
-
-INSERT INTO `private_chats` (`id`, `user_one_id`, `user_two_id`, `created_at`) VALUES
-(1, 1, 2, '2024-11-30 22:08:51'),
-(2, 1, 3, '2024-11-30 22:08:57');
 
 -- --------------------------------------------------------
 
@@ -165,9 +157,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `status`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'user', 'us1@mail.ru', '1', '1', 'Offline', '2024-11-30 22:08:25', '2024-12-01 09:02:13', NULL),
-(2, 'user2', 'us2@mail.ru', '1', '1', 'Offline', '2024-11-30 22:08:35', '2024-11-30 22:08:35', NULL),
-(3, 'user3', 'us3@mail.ru', '1', '1', 'Offline', '2024-11-30 22:08:42', '2024-11-30 22:08:42', NULL),
 (4, 'user123', 'user123@example.com', '$2a$10$aqkVjUm13f/MXUgi9LDH2O2cFZgkXsJ8F1btNw5eS4w3iTgpL4lLu', NULL, NULL, '2024-12-01 15:58:07', '2024-12-01 15:58:07', NULL),
 (5, 'user234', 'user234@mail.com', '$2a$10$lMfr0oGSXBbRm5rRSHiW9eYOhqvw9mgreERpkOtMrlxPnsS478zTS', NULL, NULL, '2024-12-01 16:02:49', '2024-12-01 16:02:49', NULL),
 (6, 'aaaaa', 'adsada@example.com', '$2a$10$yx1QwUjppvHhw25HPCBKgetcrF6L34i0W42yJ14XjmxVJUi0cYuZG', NULL, NULL, '2024-12-01 16:37:24', '2024-12-01 16:37:24', NULL);
@@ -302,7 +291,7 @@ ALTER TABLE `server_members`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
