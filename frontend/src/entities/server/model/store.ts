@@ -17,6 +17,25 @@ export const useServerStore = defineStore('serverStore', () => {
     }
   }
 
+  const setNewServer = (server: any) => {
+    servers.value.push(server)
+  }
+
+  const setNewRoleMember = (id: any, newRole: string) => {
+    if (membersServer.value) {
+      const updatedUser = membersServer.value.find((item: any) => item.id == id)
+      console.log(updatedUser)
+      updatedUser.role = newRole
+    }
+  }
+
+  const deleteMemberFromServer = (id: any) => {
+    if (membersServer.value) {
+      const deletedUserIndex = membersServer.value.findIndex((item: any) => item.id == id)
+      membersServer.value.splice(deletedUserIndex, 1)
+    }
+  }
+
   const getRoomInfo = async (roomId: any, serverId: any) => {
     const token = localStorage.getItem('token')
     try {
@@ -26,9 +45,7 @@ export const useServerStore = defineStore('serverStore', () => {
       ])
       infoRoom.value = roomData
       membersServer.value = membersData
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) {}
   }
 
   return {
@@ -36,6 +53,9 @@ export const useServerStore = defineStore('serverStore', () => {
     infoRoom,
     membersServer,
     getMyServers,
-    getRoomInfo
+    getRoomInfo,
+    setNewServer,
+    setNewRoleMember,
+    deleteMemberFromServer
   }
 })

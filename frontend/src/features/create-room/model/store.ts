@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { reactive, ref } from 'vue'
-import { serverCreate } from '@/entities/server'
+import { roomCreate } from '@/entities/server'
 import { useNotification } from '@kyvg/vue3-notification'
 import { AxiosError } from 'axios'
 import { useServerStore } from '@/entities/server'
@@ -8,29 +8,25 @@ import { useServerStore } from '@/entities/server'
 const serverStore = useServerStore()
 const { servers } = storeToRefs(serverStore)
 
-export const useServerCreatingStore = defineStore('serverCreatingStore', () => {
+export const useRoomCreatingStore = defineStore('roomCreatingStore', () => {
   const notification = useNotification()
-  const serverData = reactive({
-    name: '',
-    description: ''
+  const roomData = reactive({
+    name: ''
   })
   const loading = ref(false)
 
-  const createServer = async () => {
-    const userToken = localStorage.getItem('token')
-
+  const createRoom = async (serverId: any) => {
     try {
       loading.value = true
-      if (serverData) {
-        const { data } = await serverCreate(userToken, serverData)
+      if (roomData) {
+        const { data } = await roomCreate(serverId, roomData)
         notification.notify({
           title: 'Success',
           type: 'success',
           text: 'Server Created'
         })
         await serverStore.getMyServers()
-        serverData.name = ''
-        serverData.description = ''
+        roomData.name = ''
       }
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -51,5 +47,5 @@ export const useServerCreatingStore = defineStore('serverCreatingStore', () => {
     }
   }
 
-  return { serverData, createServer, loading }
+  return { roomData, createRoom, loading }
 })

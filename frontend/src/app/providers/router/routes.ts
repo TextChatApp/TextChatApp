@@ -61,5 +61,14 @@ export const routes = [
       title: 'Register',
       requiresGuest: true
     }
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('@/pages/settings'),
+    meta: {
+      title: 'Register',
+      requiresAuth: true
+    }
   }
 ]

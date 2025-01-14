@@ -9,6 +9,7 @@
       </button>
       <h2 class="text-2xl sm:text-3xl font-bold">Rooms</h2>
     </div>
+    <DefaultButton :text="'Create room'" @click="openPopup" class="md:w-full mb-6"></DefaultButton>
     <div class="w-full">
       <div class="flex flex-col gap-5 items-center justify-center w-full mb-3">
         <!-- cards -->
@@ -26,13 +27,33 @@
       </div>
       <!-- <Loader v-if="!myChats" class="pt-10"></Loader> -->
     </div>
+    <Popup ref="popupCreateRoom">
+      <template v-slot:header><h3 class="text-2xl mb-8">Create room</h3></template>
+      <template v-slot:default
+        ><CreateRoom @close-popup="closePopup" :server-id="serverId"></CreateRoom
+      ></template>
+    </Popup>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import SidebarRoomItem from './SidebarRoomItem.vue'
+import { CreateRoom } from '@/features/create-room'
+import DefaultButton from '@/shared/ui/buttons/DefaultButton'
+import Popup from '@/shared/ui/popup'
 
 const emits = defineEmits(['close-room-choose'])
+
+const popupCreateRoom = ref()
+
+const openPopup = () => {
+  popupCreateRoom.value?.open()
+}
+
+const closePopup = () => {
+  popupCreateRoom.value?.close()
+}
 
 interface Room {
   id?: number

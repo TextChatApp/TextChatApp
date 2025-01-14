@@ -61,11 +61,11 @@
         </div>
         <Loader v-if="!myChats" class="pt-10"></Loader>
       </div>
-      <Popup ref="popupRef" class="p-10">
+      <Popup ref="popupRef">
         <template v-slot:header><h3 class="text-2xl mb-8">Creating server</h3></template>
         <template v-slot:default><CreateServer @close-popup="closePopup"></CreateServer></template>
       </Popup>
-      <Popup ref="popupJoin" class="p-10">
+      <Popup ref="popupJoin">
         <template v-slot:header><h3 class="text-2xl mb-8">Join to server</h3></template>
         <template v-slot:default
           ><JoinServerForm @close-popup="closePopupJoin"></JoinServerForm
@@ -97,7 +97,7 @@ import { useServerStore } from '@/entities/server'
 import SidibarChatItem from './SidibarChatItem.vue'
 import SidebarServerItem from './SidebarServerItem.vue'
 import SidebarRooms from './SidebarRooms.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, provide } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { CreateServer } from '@/features/create-server'

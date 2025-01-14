@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import MessageInput from '@/features/message/message-input'
 import { MessageList } from '@/widgets/chat'
-import { onBeforeMount, onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
+import { onBeforeMount, onMounted, onUnmounted, ref, watch, nextTick, provide } from 'vue'
 import { useSocketStore } from '@/shared/api'
 import { useUser, type User } from '@/entities/user'
 import { storeToRefs } from 'pinia'
@@ -33,6 +33,7 @@ import { serverInfoQuery } from '@/entities/server'
 import { computed } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
 import { ServerHeader } from '@/widgets/server-header'
+import { useRouter } from 'vue-router'
 
 const userStore = useUser()
 const serverStore = useServerStore()
@@ -45,10 +46,20 @@ const { infoRoom, membersServer } = storeToRefs(serverStore)
 const { state } = storeToRefs(socketStore)
 
 const isPrivate = computed(() => {
-  return router.name == 'chat' ? true : false
+  return route.name == 'chat' ? true : false
 })
 
-const router = useRoute()
+const isUserAdmin = computed(() => {
+  if (membersServer.value) {
+    const member = membersServer.value.find((member: any) => {
+      return member.id == getUserId.value
+    })
+    return member.role == 'admin' ? true : false
+  }
+})
+
+const route = useRoute()
+const router = useRouter()
 
 const token = localStorage.getItem('token')
 
@@ -56,6 +67,11 @@ const props = defineProps({
   id: String,
   serverId: String
 })
+
+const getServerId = computed(() => Number(props.serverId))
+
+provide('isUserAdmin', isUserAdmin)
+provide('serverId', getServerId)
 
 const message = ref<string>('')
 
@@ -117,7 +133,7 @@ const getCurrentChatInfo = async () => {
       await serverStore.getRoomInfo(props.id, props.serverId)
       state.value.roomMessages = infoRoom.value.messages.reverse()
     } catch (err) {
-      console.log(err)
+      router.push('/')
     }
   }
 }

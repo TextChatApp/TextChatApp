@@ -3,6 +3,11 @@ import { reactive, ref } from 'vue'
 import { joinServerQuery } from '@/entities/server'
 import { useNotification } from '@kyvg/vue3-notification'
 import { AxiosError } from 'axios'
+import { useServerStore } from '@/entities/server'
+import { storeToRefs } from 'pinia'
+
+const serverStore = useServerStore()
+const { servers } = storeToRefs(serverStore)
 
 export const useJoinServerStore = defineStore('joinServerStore', () => {
   const notification = useNotification()
@@ -25,6 +30,7 @@ export const useJoinServerStore = defineStore('joinServerStore', () => {
           text: 'Success join'
         })
         dataStore.code = ''
+        await serverStore.getMyServers()
       }
     } catch (err) {
       if (err instanceof AxiosError) {

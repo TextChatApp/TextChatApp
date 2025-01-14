@@ -2,17 +2,11 @@
   <form @submit.prevent="submitForm">
     <div class="mb-8">
       <DefaultInput
-        :placeholder="'Server name'"
+        :placeholder="'Room name'"
         class="mb-3"
         @blur="v$.name.$touch"
         :error="v$.name.$error"
-        v-model="serverStore.serverData.name"
-      ></DefaultInput>
-      <DefaultInput
-        :placeholder="'Description'"
-        @blur="v$.description.$touch"
-        :error="v$.description.$error"
-        v-model="serverStore.serverData.description"
+        v-model="roomData.name"
       ></DefaultInput>
     </div>
     <DefaultButton
@@ -29,17 +23,21 @@
 <script setup lang="ts">
 import DefaultButton from '@/shared/ui/buttons/DefaultButton'
 import { DefaultInput } from '@/shared/ui/inputs/DefaultInput'
-import { useServerCreatingStore } from '@/features/create-server'
+import { useRoomCreatingStore } from '../model/store'
 import { storeToRefs } from 'pinia'
 import useVuelidate from '@vuelidate/core'
-import { createServerScheme } from '../model/validation'
+import { createRoomScheme } from '../model/validation'
 import { useRoute } from 'vue-router'
 
-const serverStore = useServerCreatingStore()
+const roomStore = useRoomCreatingStore()
 
-const { serverData, loading } = storeToRefs(serverStore)
+const { roomData, loading } = storeToRefs(roomStore)
 
-const v$ = useVuelidate(createServerScheme, serverData)
+const props = defineProps({
+  serverId: Number
+})
+
+const v$ = useVuelidate(createRoomScheme, roomData)
 const router = useRoute()
 
 const emits = defineEmits(['close-popup'])
@@ -47,7 +45,7 @@ const emits = defineEmits(['close-popup'])
 const submitForm = async () => {
   const result = await v$.value.$validate()
   if (result) {
-    serverStore.createServer()
+    roomStore.createRoom(props.serverId)
     emits('close-popup')
   }
 }

@@ -4,7 +4,7 @@
       <router-link :to="'/'"><IconHome :isActive="isActive('chats')"></IconHome></router-link>
     </div>
     <div class="flex justify-center items-center icon" :class="[{ active: isActive('settings') }]">
-      <router-link :to="'#'"><IconSettings></IconSettings></router-link>
+      <router-link :to="'/settings'"><IconSettings></IconSettings></router-link>
     </div>
     <div class="flex justify-center items-center icon" :class="[{ active: isActive('chat') }]">
       <router-link :to="'/chat/38'"
@@ -43,26 +43,6 @@ const isActive = (name: string) => {
 const openPopup = () => {
   popupRef.value?.open()
 }
-
-// const createServer = async () => {
-//   try {
-//     const { data } = await http.post(
-//       '/servers/create',
-//       {
-//         name: 'ppdpd',
-//         description: 'dsdsdsdsdsd'
-//       },
-//       {
-//         headers: {
-//           Authorization: localStorage.getItem('token')
-//         }
-//       }
-//     )
-//     console.log(data)
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
 </script>
 
 <style scoped>

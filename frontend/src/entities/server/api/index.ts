@@ -10,6 +10,14 @@ export const serverCreate = (token: string | null, data: object) => {
   })
 }
 
+export const roomCreate = (serverId: any, data: object) => {
+  return http.post(`/servers/${serverId}/rooms`, data, {
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
 export const myServersQuery = (token: string | null) => {
   return http.get(`/servers/my-servers`, {
     headers: {
@@ -50,6 +58,36 @@ export const joinServerQuery = (inviteCode: any, token: string | null) => {
 
 export const serverUsers = (serverId: any) => {
   return http.get(`/servers/${serverId}/users`, {
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
+export const deleteUserQuery = (serverId: any, userId: any) => {
+  return http.delete(`/servers/${serverId}/users/${userId}`, {
+    headers: {
+      Authorization: token
+    }
+  })
+}
+
+export const updateUserQuery = (serverId: any, userId: any, newRole: string) => {
+  return http.patch(
+    `/servers/${serverId}/users/${userId}/role`,
+    {
+      role: newRole
+    },
+    {
+      headers: {
+        Authorization: token
+      }
+    }
+  )
+}
+
+export const leaveFromServerQuery = (serverId: any) => {
+  return http.delete(`/servers/${serverId}/leave`, {
     headers: {
       Authorization: token
     }
