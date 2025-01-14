@@ -107,3 +107,11 @@ export const updateRoomNameQuery = (roomId: any, newName: string) => {
     }
   )
 }
+
+export const deleteRoomQuery = (roomId: any) => {
+  return http.delete(`/servers/rooms/${roomId}`, {
+    headers: {
+      Authorization: token
+    }
+  })
+}

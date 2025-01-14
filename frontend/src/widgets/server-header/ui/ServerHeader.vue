@@ -2,13 +2,17 @@
   <div class="flex justify-between items-center">
     <div class="flex gap-6 items-end">
       <div class="text-2xl">#{{ info?.name }}</div>
-      <button
-        v-if="isAdmin"
-        class="text-sm bg-accent-main py-1 px-3 rounded-md hover:opacity-80 transition-all"
-        @click="openPopup()"
-      >
-        Change name
-      </button>
+      <div class="flex items-center gap-2">
+        <button
+          v-if="isAdmin"
+          class="text-sm bg-accent-main py-1 px-3 rounded-md hover:opacity-80 transition-all"
+          @click="openPopup()"
+        >
+          Change name
+        </button>
+
+        <DeleteRoom v-if="isAdmin" :roomId="info?.id" :serverId="serverId"></DeleteRoom>
+      </div>
     </div>
     <div class="relative">
       <div @click="toggleDropdown()">
@@ -43,7 +47,7 @@
 
 <script setup lang="ts">
 import { inject, onMounted, ref } from 'vue'
-import { serverUsers } from '@/entities/server'
+import DeleteRoom from '@/features/delete-room'
 import MembersList from './MembersList.vue'
 import LeaveServer from '@/features/leave-server'
 import { MembersIcon } from '@/shared/ui/icons/headerIcons'
@@ -71,6 +75,13 @@ const openPopup = () => {
 
 const closePopup = () => {
   popupChangeName.value?.close()
+}
+
+const deleteRoom = async () => {
+  try {
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const toggleDropdown = () => {

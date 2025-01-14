@@ -33,6 +33,7 @@ export const useUser = defineStore('user', () => {
   }
 
   const setNewInfo = (user: any) => {
+    console.log(user)
     delete user.password
     userInfo.value = user
     localStorage.setItem('userInfo', JSON.stringify(userInfo.value))

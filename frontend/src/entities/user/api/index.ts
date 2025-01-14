@@ -16,7 +16,7 @@ export const getMeInfo = () => {
 
 export const changeUserInfoQuery = (data: any) => {
   console.log(data)
-  return http.put('/users/me', data, {
+  return http.patch('/users/me', data, {
     headers: {
       Authorization: token
     }

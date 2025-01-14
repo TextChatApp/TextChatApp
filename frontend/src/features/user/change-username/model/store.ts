@@ -13,13 +13,11 @@ export const useChangeUser = defineStore('changeUserStore', () => {
   const loading = ref(false)
 
   const changeProfile = async (userData: any) => {
-    console.log(userData)
     try {
       loading.value = true
       if (userData) {
-        console.log(userData)
         const { data } = await changeUserInfoQuery(userData)
-        userStore.setNewInfo(data)
+        userStore.setNewInfo(data.user)
         notification.notify({
           title: 'Success',
           type: 'success',

@@ -69,6 +69,7 @@ const uploadAvatar = async (): Promise<void> => {
         }
       }
     )
+    console.log(response.data)
     userStore.setNewInfo(response.data)
     console.log('Аватар успешно загружен', response.data)
   } catch (error) {
