@@ -2,7 +2,8 @@
   <div class="flex items-center justify-between w-full">
     <div class="flex gap-x-4 w-full sm:w-auto">
       <div>
-        <img :src="user" alt="" width="50" height="50" />
+        <Avatar :url="partner?.avatar" :size="50"></Avatar>
+        <!-- <img :src="user" alt="" width="50" height="50" /> -->
       </div>
       <div class="flex-1 min-w-0">
         <span class="block font-bold text-base truncate">{{ chatName }}</span>
@@ -18,10 +19,12 @@
 
 <script setup lang="ts">
 import user from '@/shared/assets/image/default-avatar-accent.png'
+import Avatar from '@/shared/ui/avatar'
 import { useUser } from '@/entities/user'
 import { type User } from '@/entities/user'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import { useSocketStore } from '@/shared/api'
 
 const userStore = useUser()
 const { getUserId } = storeToRefs(userStore)
@@ -41,6 +44,10 @@ const chatName = computed(() =>
     ? props.chat.userTwo?.username
     : props.chat.userOne?.username
 )
+
+const partner = computed(() => {
+  return props.chat.userOne?.id == getUserId.value ? props.chat.userTwo : props.chat.userOne
+})
 </script>
 
 <style></style>

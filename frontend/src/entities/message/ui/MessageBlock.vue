@@ -2,7 +2,10 @@
   <div class="flex flex-col items-start">
     <span :class="{ 'self-end': own }" class="text-sm">{{ username }}</span>
     <div class="relative flex items-center gap-1"></div>
-    <div class="relative bg-accent-main rounded-xl px-5 pt-4 py-6 w-full break-words">
+    <div
+      class="relative bg-accent-main rounded-xl px-5 pt-4 py-6 w-full break-words"
+      :class="{ 'bg-message-bg': !own }"
+    >
       <p>
         {{ message?.content }}
       </p>

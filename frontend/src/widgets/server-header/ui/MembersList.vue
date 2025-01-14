@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import DeleteUser from '@/features/users/delete-user'
-import UpdateUser from '@/features/users/update-user'
+import DeleteUser from '@/features/users/delete-from-server-user'
+import UpdateUser from '@/features/users/update-user-server'
 import { inject } from 'vue'
 
 interface Props {

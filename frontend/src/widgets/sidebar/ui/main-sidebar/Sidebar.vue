@@ -72,7 +72,7 @@
         ></template>
       </Popup>
     </div>
-    <div class="overflow-hidden">
+    <div class="">
       <transition name="slide">
         <SidebarRooms
           v-if="isRoomChoose"

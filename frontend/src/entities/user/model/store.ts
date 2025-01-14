@@ -32,6 +32,12 @@ export const useUser = defineStore('user', () => {
     localStorage.removeItem('token')
   }
 
+  const setNewInfo = (user: any) => {
+    delete user.password
+    userInfo.value = user
+    localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
+  }
+
   const searchUsersByNickname = (username: string) => {
     if (!username) return users.value
     return users.value.filter((user) =>
@@ -47,6 +53,7 @@ export const useUser = defineStore('user', () => {
     getUsers,
     getUserId,
     searchUsersByNickname,
-    logout
+    logout,
+    setNewInfo
   }
 })

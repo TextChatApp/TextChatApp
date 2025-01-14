@@ -12,7 +12,9 @@ export default {
         'black-bg': '#050505',
         'input-placeholder': '#9BABC5',
         'chats-bg': '#212229',
-        'input-bg': '#282932'
+        'input-bg': '#282932',
+        'message-bg': '#1E1F25',
+        'text-message': '#768396'
       },
       borderWidth: {
         '2px': '2px' // добавляем 2 пикселя для borderWidth

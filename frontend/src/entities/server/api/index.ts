@@ -93,3 +93,17 @@ export const leaveFromServerQuery = (serverId: any) => {
     }
   })
 }
+
+export const updateRoomNameQuery = (roomId: any, newName: string) => {
+  return http.patch(
+    `/servers/rooms/${roomId}`,
+    {
+      name: newName
+    },
+    {
+      headers: {
+        Authorization: token
+      }
+    }
+  )
+}
