@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useModel } from 'vue'
+import { onMounted, ref, useModel } from 'vue'
 import EmojiPicker from 'vue3-emoji-picker'
 import { SmileIcon, UploadIcon, SendIcon } from '@/shared/ui/icons/inputIcons'
 

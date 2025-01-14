@@ -35,7 +35,7 @@ body {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease-in;
 }
 
 .fade-enter-from,
@@ -78,4 +78,25 @@ body {
   &.error {
     background-color: #f03a3a;
   }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(-100%); /* Начало появления: справа */
+}
+
+.slide-enter-to {
+  transform: translateX(0); /* Конец появления: в центр */
+}
+
+.slide-leave-from {
+  transform: translateX(0); /* Начало ухода: в центр */
+}
+
+.slide-leave-to {
+  transform: translateX(100%);
 }

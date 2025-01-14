@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { Logo } from '@/shared/ui/logo'
 import { IconHome, IconChats, IconSettings } from '@/shared/ui/icons/menu'
-import { MenuNavigation } from '@/features/menu-nav'
+import MenuNavigation from './MenuNavigation.vue'
 </script>
 
 <style></style>

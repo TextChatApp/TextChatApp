@@ -5,11 +5,14 @@ import { getAllUsers } from '../api'
 
 export const useUser = defineStore('user', () => {
   const userInfo = ref<User | null>(JSON.parse(localStorage.getItem('userInfo') || '""') || null)
+  const userToken = ref(localStorage.getItem('token') || '""' || null)
   const users = ref<User[]>([])
 
-  const setUserInfo = (data: User) => {
-    userInfo.value = data
+  const setUserInfo = (user: any, token: string) => {
+    userInfo.value = user
+    userToken.value = token
     localStorage.setItem('userInfo', JSON.stringify(userInfo.value))
+    localStorage.setItem('token', userToken.value)
   }
 
   const getUserId = computed(() => userInfo.value?.id)
@@ -26,6 +29,7 @@ export const useUser = defineStore('user', () => {
   const logout = () => {
     userInfo.value = null
     localStorage.removeItem('userInfo')
+    localStorage.removeItem('token')
   }
 
   const searchUsersByNickname = (username: string) => {
@@ -37,6 +41,7 @@ export const useUser = defineStore('user', () => {
 
   return {
     userInfo,
+    userToken,
     users,
     setUserInfo,
     getUsers,

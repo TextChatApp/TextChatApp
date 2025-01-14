@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import humanIcon from '@/shared/assets/image/human-icon.png'
 import passwordIcon from '@/shared/assets/image/password-icon.png'
-import ButtonLogin from '@/shared/ui/buttons/ButtonLogin'
+import ButtonLogin from '@/shared/ui/buttons/DefaultButton'
 import LoginInput from '@/shared/ui/inputs/LoginInput'
 import { useNotification } from '@kyvg/vue3-notification'
 import Loader from '@/shared/ui/loader'
@@ -47,7 +47,7 @@ const signIn = async () => {
       password: password.value
     })
 
-    userStore.setUserInfo(data)
+    userStore.setUserInfo(data.user, data.token)
     router.push('/')
   } catch (err) {
     if (err instanceof AxiosError) {

@@ -22,7 +22,7 @@
 import humanIcon from '@/shared/assets/image/human-icon.png'
 import passwordIcon from '@/shared/assets/image/password-icon.png'
 import mailIcon from '@/shared/assets/image/mail-icon.png'
-import ButtonLogin from '@/shared/ui/buttons/ButtonLogin'
+import ButtonLogin from '@/shared/ui/buttons/DefaultButton'
 import LoginInput from '@/shared/ui/inputs/LoginInput'
 import { AxiosError } from 'axios'
 import Loader from '@/shared/ui/loader'

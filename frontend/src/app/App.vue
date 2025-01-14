@@ -10,11 +10,14 @@ import axios from 'axios'
 import { onMounted, watch } from 'vue'
 // import useWebSocket from '@/shared/api/socket'
 import { useSocketStore } from '@/shared/api/socket'
+import { useUser } from '@/entities/user'
 
 const socketStore = useSocketStore()
+const userStore = useUser()
 
 onMounted(() => {
   socketStore.connect('ws://localhost:8080/ws')
+  userStore.getUsers()
 })
 </script>
 

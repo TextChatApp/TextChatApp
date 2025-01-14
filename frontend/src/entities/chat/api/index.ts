@@ -1,7 +1,12 @@
 import { http } from '@/shared/api'
+import { type IChat } from '../model/type'
 
-export const getAllChats = () => {
-  return http.get('/chats')
+export const getMyChats = (userToken: string) => {
+  return http.get('/chats/my-chats', {
+    headers: {
+      Authorization: userToken
+    }
+  })
 }
 
 export const startPrivateChat = (currentUserId: number, userId: number) => {
@@ -14,6 +19,10 @@ export const startPrivateChat = (currentUserId: number, userId: number) => {
   )
 }
 
-export const getChatInfo = (id: any) => {
-  return http.get(`/chats/${id}`)
+export const getChatInfo = (id: any, token: string | null) => {
+  return http.get(`/chats/${id}`, {
+    headers: {
+      Authorization: token
+    }
+  })
 }

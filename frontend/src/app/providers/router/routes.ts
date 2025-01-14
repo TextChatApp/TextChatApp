@@ -1,5 +1,3 @@
-import Chat from '@/widgets/chat/Chat.vue'
-
 export const routes = [
   {
     path: '/',
@@ -17,10 +15,19 @@ export const routes = [
       {
         path: 'chat/:id',
         name: 'chat',
+        components: {
+          mobile: () => import('@/pages/chat'),
+          desktop: () => import('@/pages/chat')
+        },
+        props: true
+      },
+      {
+        path: '/server/:serverId/room/:id',
+        name: 'room',
         props: true,
         components: {
-          mobile: Chat,
-          desktop: Chat
+          mobile: () => import('@/pages/chat'),
+          desktop: () => import('@/pages/chat')
         }
       },
       {

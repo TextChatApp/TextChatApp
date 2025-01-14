@@ -3,8 +3,10 @@
     <transition name="fade"
       ><div v-if="isVisible" class="popup-overlay" @click.self="close">
         <div class="popup-content">
-          <button class="popup-close" @click="close">X</button>
+          <button class="popup-close" @click="close">x</button>
+          <slot name="header"></slot>
           <slot></slot>
+          <slot name="footer"></slot>
         </div>
       </div>
     </transition>
@@ -33,6 +35,7 @@ defineExpose({
 <style scoped>
 .popup-overlay {
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
@@ -44,7 +47,7 @@ defineExpose({
 }
 
 .popup-content {
-  background-color: white;
+  background-color: #1e1f25;
   padding: 20px;
   border-radius: 10px;
   width: 400px;
@@ -54,7 +57,7 @@ defineExpose({
 
 .popup-close {
   position: absolute;
-  top: 10px;
+  top: 0px;
   right: 10px;
   background: none;
   border: none;

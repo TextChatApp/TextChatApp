@@ -30,9 +30,14 @@ const { getUserId } = storeToRefs(userStore)
 
 const router = useRouter()
 
+const props = defineProps({
+  user: Object
+})
+
 const startChat = async () => {
   try {
     if (props.user && getUserId.value) {
+      console.log(props.user)
       const { data } = await startPrivateChat(getUserId.value, props.user?.id)
       router.push({ path: `/chat/${data}` })
     }
@@ -40,10 +45,6 @@ const startChat = async () => {
     console.log(err)
   }
 }
-
-const props = defineProps({
-  user: Object
-})
 </script>
 
 <style scoped>
