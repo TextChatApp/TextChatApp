@@ -1,5 +1,7 @@
 package org.example.textChatApp.service;
 
+import org.example.textChatApp.dto.UserDTO;
+import org.example.textChatApp.dto.UserForServerDTO;
 import org.example.textChatApp.model.Server;
 import org.example.textChatApp.model.ServerMember;
 import org.example.textChatApp.model.Room;
@@ -99,8 +101,113 @@ public class ServerService {
         if (!isMember) {
             throw new RuntimeException("User is not a member of this server");
         }
-
         return serverRepository.findById(serverId)
                 .orElseThrow(() -> new RuntimeException("Server not found"));
     }
+
+    public List<UserForServerDTO> getUsersByServerId(Long serverId, Long userId) {
+        // является ли пользователь участником сервера
+        boolean isMember = serverMemberRepository.findByServerIdAndUserId(serverId, userId).isPresent();
+        if (!isMember) {
+            throw new RuntimeException("User is not a member of this server");
+        }
+        return serverMemberRepository.findByServerId(serverId).stream()
+                .map(member -> new UserForServerDTO(member.getUser(), member.getRole()))
+                .collect(Collectors.toList());
+    }
+
+    public void removeUserFromServer(Long serverId, Long targetUserId, Long adminId) {
+        ServerMember adminMember = serverMemberRepository.findByServerIdAndUserId(serverId, adminId)
+                .orElseThrow(() -> new RuntimeException("Admin is not a member of the server"));
+        if (!"admin".equals(adminMember.getRole())) {
+            throw new RuntimeException("Only admins can remove users");
+        }
+        ServerMember targetMember = serverMemberRepository.findByServerIdAndUserId(serverId, targetUserId)
+                .orElseThrow(() -> new RuntimeException("User is not a member of the server"));
+        serverMemberRepository.delete(targetMember);
+    }
+
+    public void changeUserRole(Long serverId, Long targetUserId, Long adminId, String newRole) {
+        ServerMember adminMember = serverMemberRepository.findByServerIdAndUserId(serverId, adminId)
+                .orElseThrow(() -> new RuntimeException("Admin is not a member of the server"));
+        if (!"admin".equals(adminMember.getRole())) {
+            throw new RuntimeException("Only admins can change roles");
+        }
+        ServerMember targetMember = serverMemberRepository.findByServerIdAndUserId(serverId, targetUserId)
+                .orElseThrow(() -> new RuntimeException("User is not a member of the server"));
+        targetMember.setRole(newRole);
+        serverMemberRepository.save(targetMember);
+    }
+
+    public void leaveServer(Long serverId, Long userId) {
+        Server server = serverRepository.findById(serverId)
+                .orElseThrow(() -> new RuntimeException("Server not found"));
+        // чтоб админ не вышел
+        if (server.getOwner().getId().equals(userId)) {
+            throw new RuntimeException("The owner cannot leave the server.");
+        }
+        // пользователь является участником сервера
+        ServerMember serverMember = serverMemberRepository.findByServerIdAndUserId(serverId, userId)
+                .orElseThrow(() -> new RuntimeException("User is not a member of this server"));
+        serverMemberRepository.delete(serverMember);
+    }
+
+    public Room addRoom(Long serverId, Long adminId, String roomName, boolean isPrivate) {
+        ServerMember adminMember = serverMemberRepository.findByServerIdAndUserId(serverId, adminId)
+                .orElseThrow(() -> new RuntimeException("Admin is not a member of the server"));
+        if (!"admin".equals(adminMember.getRole())) {
+            throw new RuntimeException("Only admins can add rooms");
+        }
+        if (roomRepository.findByServerId(serverId).stream().anyMatch(room -> room.getName().equals(roomName))) {
+            throw new RuntimeException("Room name must be unique");
+        }
+
+        Room room = new Room();
+        room.setName(roomName);
+        room.setPrivate(isPrivate);
+        room.setServer(adminMember.getServer());
+        room.setCreatedAt(LocalDateTime.now());
+
+        return roomRepository.save(room);
+    }
+
+    public void deleteRoom(Long roomId, Long adminId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+        Long serverId = room.getServer().getId();
+
+        ServerMember adminMember = serverMemberRepository.findByServerIdAndUserId(serverId, adminId)
+                .orElseThrow(() -> new RuntimeException("Admin is not a member of the server"));
+        if (!"admin".equals(adminMember.getRole())) {
+            throw new RuntimeException("Only admins can delete rooms");
+        }
+
+        roomRepository.delete(room);
+    }
+
+    public Room updateRoom(Long roomId, Long adminId, String newName, Boolean isPrivate) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+        Long serverId = room.getServer().getId();
+
+        ServerMember adminMember = serverMemberRepository.findByServerIdAndUserId(serverId, adminId)
+                .orElseThrow(() -> new RuntimeException("Admin is not a member of the server"));
+        if (!"admin".equals(adminMember.getRole())) {
+            throw new RuntimeException("Only admins can update rooms");
+        }
+
+        if (newName != null && !newName.equals(room.getName())) {
+            if (roomRepository.findByServerId(serverId).stream().anyMatch(r -> r.getName().equals(newName))) {
+                throw new RuntimeException("Room name must be unique");
+            }
+            room.setName(newName);
+        }
+
+        if (isPrivate != null) {
+            room.setPrivate(isPrivate);
+        }
+
+        return roomRepository.save(room);
+    }
+
 }

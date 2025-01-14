@@ -15,11 +15,6 @@ public class RoomWebSocketController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    public RoomWebSocketController(RoomChatService roomChatService, SimpMessagingTemplate messagingTemplate) {
-        this.roomChatService = roomChatService;
-        this.messagingTemplate = messagingTemplate;
-    }
-
     @MessageMapping("/room/sendMessage")
     public void sendMessage(RoomMessageDTO messageDTO) {
         Message savedMessage = roomChatService.saveMessage(
