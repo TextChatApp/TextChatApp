@@ -8,8 +8,11 @@
       <div class="flex-1 min-w-0">
         <span class="block font-bold text-base truncate">{{ chatName }}</span>
         <p
-          class="block text-sm truncate font-bold text-grey-main"
-          :class="{ 'text-green-500': getOnlineStatus == 'online' }"
+          class="block text-sm truncate font-bold"
+          :class="{
+            'text-green-600': getOnlineStatus === 'online',
+            'text-grey-main': getOnlineStatus === 'offline'
+          }"
         >
           {{ getOnlineStatus }}
         </p>

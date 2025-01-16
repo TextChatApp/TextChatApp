@@ -1,5 +1,6 @@
 package org.example.textChatApp.controller;
 
+import org.example.textChatApp.dto.UserDTO;
 import org.example.textChatApp.model.User;
 import org.example.textChatApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
