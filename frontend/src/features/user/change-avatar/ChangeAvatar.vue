@@ -48,7 +48,6 @@ const onFileChange = (event: Event): void => {
   }
 }
 
-// Метод для загрузки аватара
 const uploadAvatar = async (): Promise<void> => {
   if (!file.value) {
     alert('Пожалуйста, выберите изображение для загрузки.')
@@ -60,7 +59,7 @@ const uploadAvatar = async (): Promise<void> => {
 
   try {
     const response: AxiosResponse = await axios.post(
-      'http://localhost:8080/api/users/me/avatar', // Замените на ваш URL API
+      'http://localhost:8080/api/users/me/avatar',
       formData,
       {
         headers: {

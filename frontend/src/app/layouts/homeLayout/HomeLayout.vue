@@ -7,7 +7,7 @@
     <div class="content md:flex sm:pl-24">
       <Chats
         v-if="!isMobile"
-        class="hidden md:block flex-auto px-7 py-5 bg-chats-bg h-full w-full"
+        class="hidden md:block shrink-0 grow-0 px-7 py-5 bg-chats-bg h-full w-full"
       ></Chats>
       <main class="relative content-main w-full h-full">
         <router-view v-if="isMobile" name="mobile"></router-view>

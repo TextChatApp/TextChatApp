@@ -14,8 +14,7 @@ export const getMeInfo = () => {
   })
 }
 
-export const changeUserInfoQuery = (data: any) => {
-  console.log(data)
+export const changeUserInfoQuery = (data: any, token: string | null) => {
   return http.patch('/users/me', data, {
     headers: {
       Authorization: token

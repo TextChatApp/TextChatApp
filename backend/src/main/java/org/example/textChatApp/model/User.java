@@ -1,5 +1,6 @@
 package org.example.textChatApp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -8,9 +9,11 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long id;
 
     @Column(name = "username", columnDefinition = "VARCHAR(50)")
+    @JsonProperty("username")
     private String username;
 
     @Column(name = "email", columnDefinition = "VARCHAR(100)")
@@ -23,6 +26,7 @@ public class User {
     private String avatar;
 
     @Column(name = "status")
+    @JsonProperty("status")
     private String status;
 
     @Column(name = "created_at")

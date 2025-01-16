@@ -21,7 +21,7 @@ const props = defineProps({
   background-color: #212229;
   border: 1px solid #5051f9;
   border-radius: 4px;
-  width: max-content;
+  width: 300px;
   max-height: 400px;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

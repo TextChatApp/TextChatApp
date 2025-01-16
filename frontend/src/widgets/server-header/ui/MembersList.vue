@@ -1,5 +1,5 @@
 <template>
-  <div v-for="member in members" class="flex justify-between items-center">
+  <div v-for="member in members" class="flex justify-between items-center flex-wrap">
     <div class="mr-4 max-w-32">
       <div class="font-bold text-xl mr-1 truncate">{{ member.username }}</div>
       <span>({{ member.role }})</span>

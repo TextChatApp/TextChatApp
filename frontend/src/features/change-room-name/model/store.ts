@@ -28,7 +28,7 @@ export const useChangeNameStore = defineStore('changeNameStore', () => {
         notification.notify({
           title: 'Success',
           type: 'success',
-          text: 'Success join'
+          text: 'Name changed'
         })
         dataStore.name = ''
         await serverStore.getRoomInfo(roomId, serverId)

@@ -46,6 +46,19 @@ export const useUser = defineStore('user', () => {
     )
   }
 
+  const updateUserStatus = (updatedUser: any) => {
+    console.log(updatedUser)
+    const userIndex = users.value.findIndex((user) => {
+      return user.id === updatedUser.id
+    })
+    console.log(users.value)
+    if (userIndex !== -1) {
+      users.value[userIndex].status = updatedUser.status
+    } else {
+      console.log('User not found')
+    }
+  }
+
   return {
     userInfo,
     userToken,
@@ -55,6 +68,7 @@ export const useUser = defineStore('user', () => {
     getUserId,
     searchUsersByNickname,
     logout,
+    updateUserStatus,
     setNewInfo
   }
 })

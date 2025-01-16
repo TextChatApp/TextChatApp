@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { Client } from '@stomp/stompjs'
 import { reactive } from 'vue'
+import { useUser } from '@/entities/user'
 
 export const useSocketStore = defineStore('socket', () => {
   const state = reactive({
@@ -9,13 +10,21 @@ export const useSocketStore = defineStore('socket', () => {
     privateMessages: [] as object[],
     roomMessages: [] as object[],
     privateSubscription: null as any,
+    users: [] as any[],
+    usersSub: null as any,
     roomSubscriptions: new Map<number, any>() // Подписки на комнаты
   })
 
   // Подключение к WebSocket
-  const connect = (url: string) => {
+  const connect = (url: string, token: any) => {
     state.socket = new Client({
       brokerURL: url,
+      connectHeaders: {
+        Authorization: `Bearer ${token}`
+      },
+      disconnectHeaders: {
+        Authorization: `Bearer ${token}`
+      },
       onConnect: () => {
         state.isConnected = true
         console.log('WebSocket connected')
@@ -49,6 +58,7 @@ export const useSocketStore = defineStore('socket', () => {
     }
 
     state.privateSubscription = state.socket?.subscribe('/topic/messages', (message) => {
+      console.log(message)
       const privateMessage = JSON.parse(message.body)
       state.privateMessages.unshift(privateMessage)
       console.log('Received private message:', privateMessage)
@@ -69,13 +79,10 @@ export const useSocketStore = defineStore('socket', () => {
     }
     const subscription = state.socket?.subscribe(`/topic/room/${roomId}`, (message) => {
       const roomMessage = JSON.parse(message.body)
-      // if (!state.roomMessages[roomId]) {
-      //   state.roomMessages[roomId] = []
-      // }
+
       state.roomMessages.unshift(roomMessage)
       console.log(`Received message for room ${roomId}:`, roomMessage)
     })
-    // Сохраняем подписку
     if (subscription) {
       state.roomSubscriptions.set(roomId, subscription)
     }
@@ -117,6 +124,27 @@ export const useSocketStore = defineStore('socket', () => {
     }
   }
 
+  const subscribeToUser = () => {
+    if (!state.isConnected) {
+      console.error('WebSocket is not connected')
+      return
+    }
+
+    const userStore = useUser()
+
+    // Если подписка уже активна, пропускаем повторную подписку
+    if (state.usersSub) {
+      return
+    }
+
+    state.usersSub = state.socket?.subscribe('/topic/status', (message) => {
+      const userStatus = JSON.parse(message.body)
+      state.users.unshift(userStatus)
+      userStore.updateUserStatus(userStatus)
+      console.log('Received private message:', userStatus)
+    })
+  }
+
   // Отключение от WebSocket
   const disconnect = () => {
     state.socket?.deactivate()
@@ -126,6 +154,7 @@ export const useSocketStore = defineStore('socket', () => {
     // Очистка подписок
     state.privateSubscription = null
     state.roomSubscriptions.clear()
+    state.usersSub = null
   }
 
   return {
@@ -133,6 +162,7 @@ export const useSocketStore = defineStore('socket', () => {
     connect,
     subscribeToPrivateMessages,
     subscribeToRoom,
+    subscribeToUser,
     sendPrivateMessage,
     sendRoomMessage,
     disconnect

@@ -1,10 +1,11 @@
 <template>
   <div
     v-for="message in messages"
-    class="mb-2 message"
+    class="mb-4 message"
     :class="{ own: isPrivate ? isOwnPrivate(message) : isOwn(message) }"
   >
     <MessageBlock
+      :avatar="getAvatar(message)"
       :message="message"
       :username="getUsername(message)"
       :own="isPrivate ? isOwnPrivate(message) : isOwn(message)"
@@ -18,6 +19,7 @@ import { useUser, type User } from '@/entities/user'
 import { storeToRefs } from 'pinia'
 import { getChatInfo } from '@/entities/chat'
 import { ref } from 'vue'
+import Avatar from '@/shared/ui/avatar'
 
 const userStore = useUser()
 
@@ -58,6 +60,17 @@ const getUsername = (message: any): string => {
       return item.id == message.userId
     })
     return user ? user.username : 'uncknown'
+  }
+}
+
+const getAvatar = (message: any): string | undefined => {
+  if (props.isPrivate) {
+    return message?.sender?.avatar
+  } else {
+    const user = users.value.find((item) => {
+      return item.id == message.userId
+    })
+    return user ? user.avatar : undefined
   }
 }
 </script>

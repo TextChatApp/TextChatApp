@@ -23,7 +23,7 @@ export const useRoomCreatingStore = defineStore('roomCreatingStore', () => {
         notification.notify({
           title: 'Success',
           type: 'success',
-          text: 'Server Created'
+          text: 'Room created'
         })
         await serverStore.getMyServers()
         roomData.name = ''

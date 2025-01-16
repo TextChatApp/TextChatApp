@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-3">
     <div class="flex items-center gap-2 w-[150px]">
-      <img :src="UserIcon" alt="" class="w-8 h-8" />
+      <Avatar :url="user?.avatar" :size="32"></Avatar>
       <span
         class="text-xl font-bold truncate sm:truncate md:break-words lg:break-words overflow-hidden text-ellipsis"
       >
@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { type User } from '@/entities/user'
 import UserIcon from '@/shared/assets/image/default-avatar-accent.png'
+import Avatar from '@/shared/ui/avatar/Avatar.vue'
 import { startPrivateChat } from '@/entities/chat'
 import { useRouter } from 'vue-router'
 import { useUser } from '@/entities/user'

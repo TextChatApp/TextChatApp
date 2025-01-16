@@ -1,7 +1,15 @@
 <template>
   <div class="h-screen flex justify-center items-center bg-black">
     <div class="container px-8 flex justify-center items-center">
-      <div class="px-5 py-10 bg-main text-main rounded-3xl shadow-2xl shadow-input-bg w-80 sm:w-96">
+      <div
+        class="relative px-5 py-10 bg-main text-main rounded-3xl shadow-2xl shadow-input-bg w-80 sm:w-96"
+      >
+        <button
+          class="absolute top-3 right-5 text-white text-xl hover:scale-150 transition-all"
+          @click="back()"
+        >
+          x
+        </button>
         <div class="flex flex-col justify-center gap-7 text-white">
           <h2 class="font-bold text-2xl mb-7">My account</h2>
           <div class="flex justify-between items-end flex-wrap gap-y-3">
@@ -53,7 +61,7 @@
       <template v-slot:default><ChangeEmail @close-popup="closePopupEmail"></ChangeEmail></template>
     </Popup>
     <Popup ref="changePasswordRef">
-      <template v-slot:header><h3 class="text-2xl mb-8">Change email</h3></template>
+      <template v-slot:header><h3 class="text-2xl mb-8">Change password</h3></template>
       <template v-slot:default
         ><ChangePassword @close-popup="closePopupPassword"></ChangePassword
       ></template>
@@ -71,12 +79,15 @@ import { LoginForm } from '@/features/auth'
 import user from '@/shared/assets/image/default-avatar-accent.png'
 import { storeToRefs } from 'pinia'
 import Popup from '@/shared/ui/popup'
+import { useRouter } from 'vue-router'
 
 import { ChangeUsername, ChangeEmail, ChangePassword } from '@/features/user/change-username'
 import ChangeAvatar from '@/features/user/change-avatar'
 
 const userStore = useUser()
 const { userInfo } = storeToRefs(userStore)
+
+const router = useRouter()
 
 const changeUsernameRef = ref()
 const changeEmailRef = ref()
@@ -104,6 +115,10 @@ const openPopupPassword = () => {
 
 const closePopupPassword = () => {
   changePasswordRef.value?.close()
+}
+
+const back = () => {
+  router.go(-1)
 }
 
 onMounted(async () => {

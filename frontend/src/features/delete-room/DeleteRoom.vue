@@ -1,9 +1,9 @@
 <template>
   <button
-    class="text-sm bg-red-500 py-1 px-3 rounded-md hover:opacity-80 transition-all"
+    class="text-sm bg-red-500 py-1 px-3 rounded-md hover:opacity-80 transition-all truncate"
     @click="deleteRoom()"
   >
-    Delete Room
+    Delete
   </button>
 </template>
 

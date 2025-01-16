@@ -7,6 +7,7 @@ import { changeUserInfoQuery } from '@/entities/user'
 import { useUser } from '@/entities/user'
 
 const userStore = useUser()
+const { userToken } = storeToRefs(userStore)
 
 export const useChangeUser = defineStore('changeUserStore', () => {
   const notification = useNotification()
@@ -16,12 +17,12 @@ export const useChangeUser = defineStore('changeUserStore', () => {
     try {
       loading.value = true
       if (userData) {
-        const { data } = await changeUserInfoQuery(userData)
+        const { data } = await changeUserInfoQuery(userData, userToken.value)
         userStore.setNewInfo(data.user)
         notification.notify({
           title: 'Success',
           type: 'success',
-          text: 'Server Created'
+          text: 'User info changed'
         })
       }
     } catch (err) {

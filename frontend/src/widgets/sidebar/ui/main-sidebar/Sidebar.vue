@@ -6,12 +6,12 @@
       <div class="mb-6 flex gap-2 flex-wrap items-center">
         <DefaultButton
           :text="'Create server'"
-          class="md:w-full"
+          class="w-fit md:w-full"
           @click="openPopup()"
         ></DefaultButton>
         <DefaultButton
           :text="'Join server'"
-          class="md:w-full w-1/2"
+          class="w-fit md:w-full"
           @click="openPopupJoin()"
         ></DefaultButton>
       </div>

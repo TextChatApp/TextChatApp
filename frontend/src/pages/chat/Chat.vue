@@ -41,7 +41,7 @@ const serverStore = useServerStore()
 const socketStore = useSocketStore()
 
 const { getUserId, userInfo } = storeToRefs(userStore)
-const { infoRoom, membersServer } = storeToRefs(serverStore)
+const { servers, infoRoom, membersServer } = storeToRefs(serverStore)
 
 const { state } = storeToRefs(socketStore)
 
@@ -70,8 +70,16 @@ const props = defineProps({
 
 const getServerId = computed(() => Number(props.serverId))
 
+const getServerCode = computed(() => {
+  if (servers.value) {
+    const currentServer = servers.value.find((server: any) => props.serverId == server.id)
+    return currentServer?.inviteCode
+  }
+})
+
 provide('isUserAdmin', isUserAdmin)
 provide('serverId', getServerId)
+provide('serverCode', getServerCode)
 
 const message = ref<string>('')
 
@@ -141,6 +149,7 @@ const getCurrentChatInfo = async () => {
 onMounted(async () => {
   if (isPrivate.value) {
     await getCurrentChatInfo()
+    socketStore.subscribeToUser()
     socketStore.subscribeToPrivateMessages()
   } else {
     await getCurrentChatInfo()
@@ -193,5 +202,11 @@ watch(
 
 .own {
   align-self: end;
+}
+.message-list {
+  flex: 1 1 auto; /* Гибкость для сжатия и расширения */
+  max-width: 100%; /* Ограничивает ширину родителя */
+  width: auto; /* Убирает фиксированную ширину */
+  box-sizing: border-box; /* Включает padding в расчет ширины */
 }
 </style>

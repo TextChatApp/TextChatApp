@@ -7,7 +7,12 @@
       </div>
       <div class="flex-1 min-w-0">
         <span class="block font-bold text-base truncate">{{ chatName }}</span>
-        <p class="block text-sm truncate">Hello everyOne</p>
+        <p
+          class="block text-sm truncate font-bold text-grey-main"
+          :class="{ 'text-green-500': getOnlineStatus == 'online' }"
+        >
+          {{ getOnlineStatus }}
+        </p>
       </div>
     </div>
     <div class="flex flex-col items-end text-right">
@@ -23,11 +28,11 @@ import Avatar from '@/shared/ui/avatar'
 import { useUser } from '@/entities/user'
 import { type User } from '@/entities/user'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useSocketStore } from '@/shared/api'
 
 const userStore = useUser()
-const { getUserId } = storeToRefs(userStore)
+const { getUserId, users } = storeToRefs(userStore)
 
 interface PrivateChat {
   id?: number
@@ -48,6 +53,21 @@ const chatName = computed(() =>
 const partner = computed(() => {
   return props.chat.userOne?.id == getUserId.value ? props.chat.userTwo : props.chat.userOne
 })
+
+const getOnlineStatus = computed(() => {
+  const findUser = users.value.find((item) => item.id == partner.value?.id)
+  if (findUser) {
+    return findUser.status
+  }
+})
+
+watch(
+  () => users.value,
+  (newUsers) => {
+    console.log('Users updated:', newUsers)
+  },
+  { deep: true } // Глубокое наблюдение за изменениями
+)
 </script>
 
 <style></style>

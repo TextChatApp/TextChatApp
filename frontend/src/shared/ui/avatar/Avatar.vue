@@ -21,7 +21,7 @@ const props = defineProps({
 watch(
   () => props.url,
   (newUrl) => {
-    imgSrc.value = `http://localhost:8080/${newUrl}` // Используем путь, возвращаемый сервером
+    imgSrc.value = `http://localhost:8080/${newUrl}`
   },
   { immediate: true }
 )

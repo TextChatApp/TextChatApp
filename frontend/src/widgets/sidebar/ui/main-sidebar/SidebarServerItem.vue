@@ -10,7 +10,6 @@
       </div>
     </div>
     <div class="flex flex-col items-end text-right">
-
       <!-- <span class="block font-bold text-xs text-grey-main truncate">dsdsd</span> -->
     </div>
   </div>
